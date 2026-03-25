@@ -1,4 +1,4 @@
-import { LogtoNextConfig } from "@logto/next";
+import { LogtoNextConfig, UserScope } from "@logto/next";
 
 export const logtoConfig: LogtoNextConfig = {
   appId: process.env.LOGTO_APP_ID!,
@@ -7,4 +7,5 @@ export const logtoConfig: LogtoNextConfig = {
   baseUrl: process.env.LOGTO_BASE_URL || "http://localhost:3000",
   cookieSecret: process.env.LOGTO_COOKIE_SECRET!,
   cookieSecure: process.env.NODE_ENV === "production",
+  scopes: [UserScope.Email, UserScope.Profile],
 };

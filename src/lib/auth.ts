@@ -7,11 +7,19 @@ export async function getUser() {
     return null;
   }
   try {
-    const context = await getLogtoContext(logtoConfig);
-    if (!context.isAuthenticated || !context.claims) {
+    const context = await getLogtoContext(logtoConfig, {
+      fetchUserInfo: true,
+    });
+    if (!context.isAuthenticated) {
       return null;
     }
-    return context.claims;
+    // userInfo has email/name from the userinfo endpoint
+    // claims from the ID token may not include email without proper scopes
+    return {
+      sub: context.claims?.sub ?? "",
+      email: context.userInfo?.email ?? context.claims?.email ?? undefined,
+      name: context.userInfo?.name ?? context.claims?.name ?? undefined,
+    };
   } catch {
     return null;
   }

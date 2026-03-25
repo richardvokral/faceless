@@ -15,8 +15,8 @@ export default async function DashboardPage() {
   }
 
   const logtoUserId = user.sub;
-  const email = (user.email as string) || "unknown";
-  const name = (user.name as string) || null;
+  const email = user.email || "unknown";
+  const name = user.name || null;
 
   let customer;
   let events;
