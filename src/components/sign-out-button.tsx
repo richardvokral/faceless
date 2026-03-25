@@ -6,11 +6,13 @@ type Props = {
 
 export default function SignOutButton({ onSignOut }: Props) {
   return (
-    <button
-      onClick={() => onSignOut()}
-      className="rounded-full border border-foreground/20 px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground/5"
-    >
-      Sign Out
-    </button>
+    <form action={onSignOut}>
+      <button
+        type="submit"
+        className="rounded-full border border-foreground/20 px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground/5"
+      >
+        Sign Out
+      </button>
+    </form>
   );
 }
