@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
-import { signIn } from "@logto/next/server-actions";
-import { logtoConfig } from "@/lib/logto";
 import SignInButton from "@/components/sign-in-button";
 
 export const dynamic = "force-dynamic";
@@ -24,12 +22,7 @@ export default async function Home() {
           benefits, and connected businesses.
         </p>
       </div>
-      <SignInButton
-        onSignIn={async () => {
-          "use server";
-          await signIn(logtoConfig);
-        }}
-      />
+      <SignInButton />
     </div>
   );
 }

@@ -120,3 +120,16 @@ Three tables in Neon Postgres (managed via Prisma):
 ## Environment Variables
 
 See [`.env.example`](.env.example) for the full list with descriptions.
+
+### Where to get each value
+
+| Variable | Where to find it |
+|----------|-----------------|
+| `LOGTO_APP_ID` | Logto Console → Applications → Your App → App ID |
+| `LOGTO_APP_SECRET` | Logto Console → Applications → Your App → App Secret |
+| `LOGTO_ENDPOINT` | Logto Console → Applications → Your App → Endpoint (e.g. `https://abc123.logto.app`) |
+| `LOGTO_BASE_URL` | Your app's URL: `http://localhost:3000` (local) or `https://your-app.vercel.app` (prod) |
+| `LOGTO_COOKIE_SECRET` | **Generate yourself** — any random 32+ char string. Use a password generator or `openssl rand -base64 32`. This is NOT from Logto. |
+| `LOGTO_ACCOUNT_CENTER_URL` | **Optional**. Format: `https://<your-tenant>.logto.app/account`. First enable in Logto Console → Sign-in & account → Account center. If not set, the Account Settings link won't show. |
+| `DATABASE_URL` | Neon Console → Your Project → Connection Details → Connection string |
+| `ADMIN_EMAILS` | Your choice — comma-separated list of emails that should have admin access |

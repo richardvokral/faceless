@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { getUser, isAdmin } from "@/lib/auth";
-import { signOut } from "@logto/next/server-actions";
-import { logtoConfig } from "@/lib/logto";
 import SignOutButton from "./sign-out-button";
 
 export default async function Nav() {
@@ -50,12 +48,7 @@ export default async function Nav() {
           {user && (
             <>
               <span className="text-xs text-foreground/50">{userEmail}</span>
-              <SignOutButton
-                onSignOut={async () => {
-                  "use server";
-                  await signOut(logtoConfig);
-                }}
-              />
+              <SignOutButton />
             </>
           )}
         </div>

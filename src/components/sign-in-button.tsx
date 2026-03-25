@@ -1,12 +1,10 @@
 "use client";
 
-type Props = {
-  onSignIn: () => Promise<void>;
-};
+import { handleSignIn } from "@/app/actions";
 
-export default function SignInButton({ onSignIn }: Props) {
+export default function SignInButton() {
   return (
-    <form action={onSignIn}>
+    <form action={handleSignIn}>
       <button
         type="submit"
         className="rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
