@@ -18,13 +18,38 @@ export default async function DashboardPage() {
   const email = (user.email as string) || "unknown";
   const name = (user.name as string) || null;
 
-  const customer = await ensureCustomerState(logtoUserId, email, name);
+  let customer;
+  let events;
 
-  const events = await prisma.benefitEvent.findMany({
-    where: { logtoUserId },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
+  try {
+    customer = await ensureCustomerState(logtoUserId, email, name);
+    events = await prisma.benefitEvent.findMany({
+      where: { logtoUserId },
+      orderBy: { createdAt: "desc" },
+      take: 50,
+    });
+  } catch (error) {
+    console.error("Dashboard DB error:", error);
+    return (
+      <div className="mx-auto w-full max-w-3xl px-6 py-8">
+        <h1 className="mb-6 text-2xl font-bold">Dashboard</h1>
+        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200">
+          <h2 className="mb-2 font-semibold">Database Error</h2>
+          <p className="text-sm">
+            Could not connect to the database. This usually means:
+          </p>
+          <ul className="mt-2 list-inside list-disc text-sm">
+            <li>The DATABASE_URL environment variable is not set or incorrect</li>
+            <li>The database tables have not been created yet (run <code className="rounded bg-red-100 px-1 dark:bg-red-900">npx prisma db push</code>)</li>
+            <li>The Neon database is unreachable</li>
+          </ul>
+          <p className="mt-3 text-xs opacity-70">
+            Error: {error instanceof Error ? error.message : String(error)}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   async function claimBenefit() {
     "use server";
