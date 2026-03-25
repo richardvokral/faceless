@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CustomerState {
+  logtoUserId             String   @id @map("logto_user_id")
+  email                   String
+  name                    String?
+  mediaSubscriptionActive Boolean  @default(false) @map("media_subscription_active")
+  fashionPointsBalance    Int      @default(0) @map("fashion_points_balance")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  benefitEvents BenefitEvent[]
+
+  @@map("customer_state")
+}
+
+model BenefitEvent {
+  id          String   @id @default(cuid())
+  logtoUserId String   @map("logto_user_id")
+  eventType   String   @map("event_type")
+  pointsDelta Int      @map("points_delta")
+  source      String?
+  period      String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  customer CustomerState @relation(fields: [logtoUserId], references: [logtoUserId])
+
+  @@unique([logtoUserId, eventType, period])
+  @@map("benefit_events")
+}
+
+model AdminAction {
+  id           String   @id @default(cuid())
+  adminEmail   String   @map("admin_email")
+  actionType   String   @map("action_type")
+  targetUserId String   @map("target_user_id")
+  payloadJson  Json?    @map("payload_json")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("admin_actions")
+}
